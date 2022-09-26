@@ -1,0 +1,21 @@
+{
+  "name": "ec-print-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --config nodemon.json src/index.ts",
+    "start:debug": "nodemon --config nodemon.json --inspect-brk src/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.6",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  }
+}

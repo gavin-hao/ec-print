@@ -1,0 +1,15 @@
+node_modules
+.DS_Store
+.cache
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+build
+dist
+lib
+es
+yarn-error.log
+npm-error.log
+.eslintcache
+coverage
+.env.*
