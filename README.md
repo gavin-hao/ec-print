@@ -15,6 +15,9 @@ All in one print toolkit for e-commerce ，integrated cainiao,pinduouo,jingdong,
 - [快手](https://docs.qingque.cn/d/home/eZQA41D2h9LGUFaD26bC07e--?identityId=EmukFTnlEF#section=h.fspyixibo86k)
 - [抖音](https://bytedance.feishu.cn/docx/doxcn1Q29qB2M3HKzjK5uaMbsMb)
 - [美团](https://opendj.meituan.com/home/guide/bulkPurchasing/10721)
+
+# dependences
+- [reconnecting-websocket](https://github.com/pladaria/reconnecting-websocket)
 # Quickstart
 
 #### install
