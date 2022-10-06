@@ -4,7 +4,7 @@ import Jingdong from './providers/jingdong';
 import Kuaishou from './providers/kuaishou';
 import Meituan from './providers/meituan';
 import Doudyin from './providers/douyin';
-
+import PrintProvider, { PrinterProps } from './printProvider';
 import Printer from './printer';
 export { Cainiao, Pinduoduo, Kuaishou, Doudyin, Meituan, Jingdong };
 export { default as getUUID } from './uuid';
@@ -18,9 +18,10 @@ export {
   NotifyResultCallback,
   CallbackMap,
   PrinterListenersMap,
+  PrinterProps,
 } from './printProvider';
-
-export const Providers = {
+export type DerivedProvider = { new (args: PrinterProps): PrintProvider };
+export const Providers: { [k: string]: DerivedProvider } = {
   Cainiao,
   Pinduoduo,
   Jingdong,

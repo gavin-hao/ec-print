@@ -2,23 +2,26 @@ import Printer, { Providers, Response } from '../../src';
 import WebSocket from 'ws';
 const url = 'ws://localhost:13528';
 
-const cainiao = new Providers.Cainiao(undefined, {
-  WebSocket,
-  // maxRetries: 2,
-  debug: true,
+const cainiao = new Providers.Cainiao({
+  options: {
+    WebSocket,
+    // maxRetries: 2,
+    debug: true,
+  },
 });
-const doudian = new Providers.Doudian(undefined, {
-  WebSocket,
-  // maxRetries: 2,
-  debug: true,
+const doudian = new Providers.Doudian({
+  options: {
+    WebSocket,
+    // maxRetries: 2,
+    debug: true,
+  },
 });
 const printer = new Printer();
 printer.register([
   { key: cainiao.providerKey, provider: cainiao },
   { key: doudian.providerKey, provider: doudian },
 ]);
-printer.connect();
-printer.allAgents.map((a) => {
+printer.allAgents.forEach((a) => {
   a.addEventListener('close', (e) => {
     console.log(`${a.providerKey} printer connect closed`, e.reason, e.code);
   });
@@ -75,15 +78,7 @@ async function run() {
 }
 
 run();
-// while (true) {
-//   console.log(printer.isConnect);
-// }
-// const count = 0;
+
 setInterval(() => {
-  // printer.print(task);
   console.log(new Date().getTime(), printer.isConnect);
-  // if (!printer.isConnect && count > 5) {
-  //   printer.reconnect();
-  // }
-  // count++;
 }, 10000 * Math.random());

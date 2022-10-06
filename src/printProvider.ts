@@ -26,6 +26,11 @@ export type PrinterListenersMap = {
   // message: (event: MessageEvent) => void;
   open: Array<(event: Event) => void>;
 };
+export interface PrinterProps {
+  url?: UrlProvider;
+  options?: SocketOption;
+  version?: string;
+}
 export interface SocketOption extends Options {
   /**
    * if true attempt to reconnect when send message to ws
@@ -56,7 +61,8 @@ export default abstract class PrinterProvider implements IPrinter {
     open: [],
     close: [],
   };
-  constructor(url: UrlProvider, options: SocketOption = {}) {
+  constructor(props: PrinterProps = { url: '' }) {
+    const { url, options = {} } = props;
     this.url = url;
     this.options = { ...this.options, ...(options || {}) };
   }
@@ -67,10 +73,15 @@ export default abstract class PrinterProvider implements IPrinter {
   public onclose: ((event: CloseEvent) => void) | null = null;
   public onerror: ((event: ErrorEvent) => void) | null = null;
   public onopen: ((event: Event) => void) | null = null;
+  private _connectLock = false;
   connect() {
     if (!this.url) {
       throw Error('url is required!');
     }
+    if (this._connectLock) {
+      return Promise.resolve(true);
+    }
+    this._connectLock = true;
     if (!this.ws || this.ws.readyState === this.ws.CLOSED) {
       this.ws = new ReconnectingWebSocket(this.url, undefined, this.options);
     }
@@ -78,35 +89,50 @@ export default abstract class PrinterProvider implements IPrinter {
       this._onMessage(event);
     });
     this.ws?.addEventListener('open', (event) => {
-      this.startRequest();
-      this._dispatchCallback('open', [true]);
-      if (this.onopen) {
-        this.onopen(event);
-      }
-      this._listeners.open.forEach((listener) => listener(event));
+      this._handleOpen(event);
     });
     this.ws.addEventListener('error', (event) => {
-      this._debug('connect error', this.url, event.message);
-      this._dispatchCallback('error', [false]);
-      if (this.onerror) {
-        this.onerror(event);
-      }
-      this._listeners.error.forEach((listener) => listener(event));
+      this._handleError(event);
     });
     this.ws.addEventListener('close', (event) => {
-      this._debug(`connect closed url[${this.url}],code:${event.code},reason:${event.reason}`);
-      this.$requestQueue.forEach((req) => {
-        req.start = false;
-      });
-      if (this.onclose) {
-        this.onclose(event);
-      }
-      this._listeners.close.forEach((listener) => listener(event));
+      this._handleClose(event);
     });
     return new Promise<boolean>((resolve) => {
-      this._addCallback('open', resolve);
-      this._addCallback('error', resolve);
+      this._addCallback('open', (evt) => {
+        this._connectLock = false;
+        resolve(evt);
+      });
+      this._addCallback('error', (evt) => {
+        this._connectLock = false;
+        resolve(evt);
+      });
     });
+  }
+  private _handleOpen(event: Event) {
+    this.startRequest();
+    this._dispatchCallback('open', [true]);
+    if (this.onopen) {
+      this.onopen(event);
+    }
+    this._listeners.open.forEach((listener) => listener(event));
+  }
+  private _handleError(event: ErrorEvent) {
+    this._debug('connect error', this.url, event.message);
+    this._dispatchCallback('error', [false]);
+    if (this.onerror) {
+      this.onerror(event);
+    }
+    this._listeners.error.forEach((listener) => listener(event));
+  }
+  private _handleClose(event: CloseEvent) {
+    this._debug(`connect closed url[${this.url}],code:${event.code},reason:${event.reason}`);
+    this.$requestQueue.forEach((req) => {
+      req.start = false;
+    });
+    if (this.onclose) {
+      this.onclose(event);
+    }
+    this._listeners.close.forEach((listener) => listener(event));
   }
   reconnect() {
     this.disconnect(1000, 'reconnect');
@@ -117,6 +143,9 @@ export default abstract class PrinterProvider implements IPrinter {
     Object.keys(this.$callback).forEach((k: string) => (this.$callback[k as keyof CallbackMap] = undefined));
     this.$notifyPrintResultListener.splice(0);
     this.$requestQueue.splice(0);
+    this._removeListners();
+  }
+  private _removeListners() {
     this.onclose = null;
     this.onerror = null;
     this.onopen = null;
