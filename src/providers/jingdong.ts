@@ -1,4 +1,4 @@
-import PrinterProvider, { SocketOption, UrlProvider } from '../printProvider';
+import PrinterProvider, { PrinterProps } from '../printProvider';
 import { Response, Request, CMD, JsonObject, PrintTask } from '../interfaces';
 
 const Url = 'ws://localhost:9113';
@@ -23,10 +23,10 @@ export interface JDResponse extends JsonObject {
 class JingdongPrinter extends PrinterProvider {
   readonly providerKey: string = 'jingdong';
   private version: string;
-  constructor(url: UrlProvider = Url, options: SocketOption = {}, version: string = '2') {
-    url = url || Url;
-    super(url, options);
-    this.version = version;
+  constructor(props: PrinterProps = { url: Url }) {
+    const url = props.url || Url;
+    super({ url, options: props.options });
+    this.version = props.version || '1.0';
   }
 
   printPreview<T extends Response>(task: PrintTask): Promise<T> {

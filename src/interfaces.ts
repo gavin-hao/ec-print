@@ -2,7 +2,7 @@ export enum Platform {
   cainiao = 'cainiao',
   pinduoduo = 'pinduoduo',
   jingdong = 'jingdong',
-  douyin = 'douyin',
+  douyin = 'doudian',
   meituan = 'meituan',
   kuaishou = 'kuaishou',
 }
@@ -163,7 +163,7 @@ export interface PrintTask extends JsonObject {
   /**
    * 京东打印组件请求参数字段,其他平台使用documents 中的数据
    */
-  parameters?: { printerName: string; contents: Array<JDDocumentContent> } & JsonObject;
+  parameters?: { printName?: string; contents: Array<JDDocumentContent> } & JsonObject;
 }
 
 export interface PrinterConfig extends Record<string, any> {

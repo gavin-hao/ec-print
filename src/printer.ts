@@ -113,7 +113,7 @@ class Printer {
     delete task.agentKey;
     return (await agent!.printPreview(task)) as T;
   }
-  async getPrinters<T extends Response>(agentKey?: string): Promise<T> {
+  async getPrinters<T extends { printers: Array<{ name?: string }> } & Response>(agentKey?: string): Promise<T> {
     this.throwIfNoAgents();
     let agent = this.getAgentOrDefault(agentKey);
     if (!agent?.isConnect) {

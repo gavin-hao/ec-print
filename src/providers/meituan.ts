@@ -1,18 +1,19 @@
-import PrinterProvider, { SocketOption, UrlProvider } from '../printProvider';
+import PrinterProvider, { PrinterProps } from '../printProvider';
 import { Response, Request, CMD, JsonObject } from '../interfaces';
 
-const Urls = ['https://localhost:28613', 'https://localhost:28713', 'https://localhost:28813'];
+const Urls = ['ws://localhost:28613', 'ws://localhost:28713', 'ws://localhost:28813'];
 let urlIndex = 0;
 const Url = () => {
   return Urls[urlIndex++ % Urls.length];
 };
+// const Url = 'ws://localhost:28613';
 class MeituanPrinter extends PrinterProvider {
   readonly providerKey: string = 'meituan';
   private version: string;
-  constructor(url: UrlProvider = Url, options: SocketOption = {}, version: string = '1.0') {
-    url = url || Url;
-    super(url, options);
-    this.version = version;
+  constructor(props: PrinterProps = { url: Url }) {
+    const url = props.url || Url;
+    super({ url, options: props.options });
+    this.version = props.version || '1.0';
   }
 
   handleResponseMessage<T extends Response>(event: MessageEvent<any>): T {
