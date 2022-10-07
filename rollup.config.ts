@@ -8,6 +8,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 const pkg = require('./package.json');
 
 const libraryName = pkg.name;
+// exclude dependence
 const external = Object.keys(pkg.dependencies || {});
 export default {
   input: `src/index.ts`,
