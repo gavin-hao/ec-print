@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/gavin-hao/ec-print/compare/v1.0.0...v1.0.1) (2022-10-07)
+
+
+### Bug Fixes
+
+* **bundle:** exclude dependences in  bundle ([0e0f0ed](https://github.com/gavin-hao/ec-print/commit/0e0f0ed09f3d2b791b2de793900160d9d7241579))
+
 # 1.0.0 (2022-10-06)
 
 
