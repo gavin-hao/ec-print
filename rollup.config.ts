@@ -8,7 +8,8 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 const pkg = require('./package.json');
 
 const libraryName = pkg.name;
-
+// exclude dependence
+const external = Object.keys(pkg.dependencies || {});
 export default {
   input: `src/index.ts`,
   output: [
@@ -16,7 +17,7 @@ export default {
     { file: pkg.module, format: 'es', sourcemap: true },
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: [],
+  external,
   watch: {
     include: 'src/**',
   },
