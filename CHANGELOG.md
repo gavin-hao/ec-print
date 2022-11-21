@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/gavin-hao/ec-print/compare/v1.0.1...v1.0.2) (2022-11-21)
+
+
+### Bug Fixes
+
+* **printprovider:** print request parameters error ([268914c](https://github.com/gavin-hao/ec-print/commit/268914c7710888e1290c24b70b8626c9dd714d8f))
+
 ## [1.0.1](https://github.com/gavin-hao/ec-print/compare/v1.0.0...v1.0.1) (2022-10-07)
 
 
