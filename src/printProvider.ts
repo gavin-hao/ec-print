@@ -265,11 +265,11 @@ export default abstract class PrinterProvider implements IPrinter {
   }
   print<T extends Response>(task: PrintTask): Promise<T> {
     const req = this.getRequestHeader('print');
-    return this.request({ ...req, ...{ ...task, preview: false } }) as Promise<T>;
+    return this.request({ ...req, task: { ...task, preview: false } }) as Promise<T>;
   }
   printPreview<T extends Response>(task: PrintTask): Promise<T> {
     const req = this.getRequestHeader('print');
-    return this.request({ ...req, ...{ ...task, preview: true } }) as Promise<T>;
+    return this.request({ ...req, task: { ...task, preview: true } }) as Promise<T>;
   }
   getPrinters<T extends Response>(): Promise<T> {
     const req = this.getRequestHeader('getPrinters');
