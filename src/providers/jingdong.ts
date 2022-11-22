@@ -1,5 +1,6 @@
 import PrinterProvider, { PrinterProps } from '../printProvider';
 import { Response, Request, CMD, JsonObject, PrintTask } from '../interfaces';
+import { debug } from 'util';
 
 const Url = 'ws://localhost:9113';
 /**
@@ -42,19 +43,32 @@ class JingdongPrinter extends PrinterProvider {
     return this.request({ ...req }) as Promise<T>;
   }
   notifyPrintResult(callback: <T extends Response>(response: T) => void): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
+    console.log('Method not implemented.');
   }
   getTaskStatus<T extends Response>(taskID: string[]): Promise<T> {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
+    console.log('[jingdong] Method not supported.');
+    const req = this.getRequestHeader('getTaskStatus');
+    return Promise.resolve({ ...req, taskID } as unknown as T);
   }
   setGlobalConfig<T extends Response>(config: { notifyOnTaskFailure?: boolean | undefined }): Promise<T> {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
+    console.log('[jingdong] Method not supported.');
+    const req = this.getRequestHeader('setGlobalConfig');
+    return Promise.resolve({ ...req, config } as unknown as T);
   }
   getGlobalConfig<T extends Response>(): Promise<T> {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
+    console.log('[jingdong] Method not supported.');
+    const req = this.getRequestHeader('getGlobalConfig');
+    return Promise.resolve({ ...req } as unknown as T);
   }
   getAgentInfo<T extends Response>(): Promise<T> {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
+    console.log('[jingdong] Method not supported.');
+    const req = this.getRequestHeader('getAgentInfo');
+    return Promise.resolve({ ...req } as unknown as T);
   }
   handleResponseMessage<T extends Response>(event: MessageEvent<any>): T {
     const jdRes = JSON.parse(event.data) as JDResponse;
