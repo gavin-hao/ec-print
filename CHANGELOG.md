@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/gavin-hao/ec-print/compare/v1.0.2...v1.0.3) (2022-11-22)
+
+
+### Bug Fixes
+
+* **jingdoprovider:** not throw exception form method not implements ([be94494](https://github.com/gavin-hao/ec-print/commit/be94494c08cce72751dfe9371a0d673e4260a2fc))
+
 ## [1.0.2](https://github.com/gavin-hao/ec-print/compare/v1.0.1...v1.0.2) (2022-11-21)
 
 
