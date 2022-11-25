@@ -143,7 +143,10 @@ export default abstract class PrinterProvider implements IPrinter {
     Object.keys(this.$callback).forEach((k: string) => (this.$callback[k as keyof CallbackMap] = undefined));
     this.$notifyPrintResultListener.splice(0);
     this.$requestQueue.splice(0);
-    this._removeListners();
+    if (code !== 1000) {
+      /** reconnect not remove listners */
+      this._removeListners();
+    }
   }
   private _removeListners() {
     this.onclose = null;
