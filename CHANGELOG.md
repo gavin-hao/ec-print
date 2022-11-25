@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/gavin-hao/ec-print/compare/v1.0.3...v1.0.4) (2022-11-25)
+
+
+### Bug Fixes
+
+* **printprovider:** reconnect event listners been removed ([79a0745](https://github.com/gavin-hao/ec-print/commit/79a07458a100749e8941086f8a3d72c328869d7c))
+
 ## [1.0.3](https://github.com/gavin-hao/ec-print/compare/v1.0.2...v1.0.3) (2022-11-22)
 
 
