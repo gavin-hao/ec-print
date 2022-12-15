@@ -9,7 +9,7 @@ const Url = 'ws://localhost:9113';
 export interface JDRequest extends JsonObject {
   orderType: string;
   key: string;
-  dataType: string;
+  // dataType?: string;
   parameters: JsonObject;
 }
 export interface JDResponse extends JsonObject {
@@ -27,7 +27,7 @@ class JingdongPrinter extends PrinterProvider {
   constructor(props: PrinterProps = { url: Url }) {
     const url = props.url || Url;
     super({ url, options: props.options });
-    this.version = props.version || '1.0';
+    this.version = props.version || '2';
   }
 
   printPreview<T extends Response>(task: PrintTask): Promise<T> {
@@ -52,7 +52,7 @@ class JingdongPrinter extends PrinterProvider {
     const req = this.getRequestHeader('getTaskStatus');
     return Promise.resolve({ ...req, taskID } as unknown as T);
   }
-  setGlobalConfig<T extends Response>(config: { notifyOnTaskFailure?: boolean | undefined }): Promise<T> {
+  setGlobalConfig<T extends Response>(config: { notifyOnTaskFailure?: boolean }): Promise<T> {
     // throw new Error('Method not implemented.');
     console.log('[jingdong] Method not supported.');
     const req = this.getRequestHeader('setGlobalConfig');
@@ -72,7 +72,7 @@ class JingdongPrinter extends PrinterProvider {
   }
   handleResponseMessage<T extends Response>(event: MessageEvent<any>): T {
     const jdRes = JSON.parse(event.data) as JDResponse;
-    const { detailinfo, code, key } = jdRes;
+    const { code, key } = jdRes;
     let cmd: CMD;
     //code: 2：批量推送打印，6：获取打印机列表，8：预览 ）
     switch (code) {
@@ -96,7 +96,7 @@ class JingdongPrinter extends PrinterProvider {
   }
   handleRequestMessage<T extends JsonObject>(jsonData: Request): T {
     const { cmd, version, requestID } = jsonData;
-    const reqData: JDRequest = { version, parameters: {}, key: requestID, dataType: 'app' } as unknown as JDRequest;
+    const reqData: JDRequest = { version, parameters: {}, key: requestID } as unknown as JDRequest;
     switch (cmd) {
       case 'getPrinters':
         reqData.orderType = 'GET_Printers';
