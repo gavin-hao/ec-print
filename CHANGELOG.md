@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/gavin-hao/ec-print/compare/v1.0.5...v1.0.6) (2022-12-15)
+
+
+### Bug Fixes
+
+* **jingdong:** set jingdong provider default cmd version 2 ([201d1ba](https://github.com/gavin-hao/ec-print/commit/201d1ba78d4c5a9fe39664f0c54cdeff02852780))
+
 ## [1.0.5](https://github.com/gavin-hao/ec-print/compare/v1.0.4...v1.0.5) (2022-12-15)
 
 
