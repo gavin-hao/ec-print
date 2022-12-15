@@ -1,6 +1,6 @@
 {
   "name": "ec-print",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "print toolkit for e-commerce ，integrated cainiao,pinduouo,jingdong,kuaishou,douyin ...",
   "main": "dist/ec-print.umd.js",
   "module": "dist/ec-print.esm.js",

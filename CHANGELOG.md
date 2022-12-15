@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/gavin-hao/ec-print/compare/v1.0.4...v1.0.5) (2022-12-15)
+
+
+### Bug Fixes
+
+* **interfaces:** set JDDocumentContent.dataType nullable ([3f70908](https://github.com/gavin-hao/ec-print/commit/3f70908ba64a15b0bdda15d62d083cf2e30728f2))
+
 ## [1.0.4](https://github.com/gavin-hao/ec-print/compare/v1.0.3...v1.0.4) (2022-11-25)
 
 
