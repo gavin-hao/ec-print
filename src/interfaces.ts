@@ -117,7 +117,7 @@ export interface JDDocumentContent {
   /**
    * 打印数据【printData】为明文，dataType=“app”
    */
-  dataType: string;
+  dataType?: string;
 }
 
 export interface PrintTask extends JsonObject {
